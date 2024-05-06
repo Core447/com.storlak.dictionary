@@ -1,0 +1,39 @@
+id: com.storlak.dictionary
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+command: launch.sh
+
+finish-args:
+  - --socket=x11
+  # - --socket=fallback-x11
+  - --device=dri
+  - --share=network
+
+modules:
+  # - pypi-requirements.yaml
+
+  # - python3-tkinter.yaml
+  # - tkinter.yaml
+  - tkinter-standalone.yaml
+
+  - reqs.yaml
+
+  - name: Dictionary
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/bin
+      - cp 003\ -\ Dictionary/ /app/bin/Dictionary -r
+
+      # - "pip install -r requirements.txt --ignore-installed --prefix=/app"
+      
+      - install -D 003\ -\ Dictionary/launch.sh /app/bin/launch.sh
+      # - chmod +x /app/bin/launch.sh
+      # - install -D flatpak/icon_256.png /app/share/icons/hicolor/256x256/apps/com.core447.StreamController.png
+      # - install -D flatpak/launch.desktop /app/share/applications/com.core447.StreamController.desktop
+      # - install -D flatpak/com.core447.StreamController.metainfo.xml /app/share/metainfo/com.core447.StreamController.metainfo.xml
+    sources:
+      - type: git
+        url: https://github.com/Core447/PythonMiniProjects
+        branch: main #TODO: Specify tagh
+# Install via: flatpak-builder --repo=repo --force-clean --install --user build-dir com.storlak.dictionary.yaml
